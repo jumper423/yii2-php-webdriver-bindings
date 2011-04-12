@@ -1,7 +1,0 @@
-#labels Phase-Implementation
-= Introduction =
-
-This is site for developers of PHP bindings for *Selenium WebDriver*. This PHP library allows creating functional webdriver tests with PHP. 
-
-= Details =
-Library comunicates with *Selenium Server* using [http://code.google.com/p/selenium/wiki/JsonWireProtocol JsonWireProtocol].

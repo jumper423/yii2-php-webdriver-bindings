@@ -1,7 +1,10 @@
 #List of JsonWireProtocol implemented methods (on green)
+<style type="text/css">
+.done {background:#00ff00; }
+</style>
 
 <table border="1" cellspacing="0">
-<tbody><tr><td> <strong>HTTP Method</strong> </td><td> <strong>Path</strong> </td><td> <strong>Summary</strong> </td><td> <strong>Java Equivalent</strong> </td></tr>
+<tr><td> <strong>HTTP Method</strong> </td><td> <strong>Path</strong> </td><td> <strong>Summary</strong> </td><td> <strong>Java Equivalent</strong> </td></tr>
  <tr class="done"><td> POST </td><td> /session </td><td> Create a new session. </td><td> <i>N/A</i> </td></tr>
  <tr><td> GET </td><td> /session/:sessionId </td><td> Retrieve the capabilities of the specified session. </td><td> <i>N/A</i> </td></tr>
  <tr class="done"><td> DELETE </td><td> /session/:sessionId </td><td> Delete the session. </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/WebDriver.html#quit%28%29" rel="nofollow">WebDriver#quit()</a> </td></tr>
@@ -71,6 +74,5 @@
  <tr><td> POST </td><td> /session/:sessionId/buttondown </td><td> Click and hold the left mouse button (at the coordinates set by the last moveto command). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/ClickAndHoldAction.html#perform%28%29" rel="nofollow">ClickAndHoldAction#perform()</a> </td></tr>
  <tr><td> POST </td><td> /session/:sessionId/buttonup </td><td> Releases the mouse button previously held (where the mouse is currently at). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/ButtonReleaseAction.html#perform%28%29" rel="nofollow">ButtonReleaseAction#perform()</a> </td></tr>
  <tr><td> POST </td><td> /session/:sessionId/doubleclick </td><td> Double-clicks at the current mouse coordinates (set by moveto). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/DoubleClickAction.html#perform%28%29" rel="nofollow">DoubleClickAction#perform()</a> </td> </tr>
- </tbody>
  </body>
 </table>

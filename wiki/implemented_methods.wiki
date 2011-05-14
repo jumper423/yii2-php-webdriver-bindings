@@ -1,5 +1,5 @@
 #List of JsonWireProtocol implemented methods (on green)
-<body>
+
 <table border="1" cellspacing="0">
 <tr><td> <strong>HTTP Method</strong> </td><td> <strong>Path</strong> </td><td> <strong>Summary</strong> </td><td> <strong>Java Equivalent</strong> </td></tr>
  <tr style="background:#00ff00;"><td> POST </td><td> /session </td><td> Create a new session. </td><td> <i>N/A</i> </td></tr>
@@ -71,5 +71,4 @@
  <tr><td> POST </td><td> /session/:sessionId/buttondown </td><td> Click and hold the left mouse button (at the coordinates set by the last moveto command). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/ClickAndHoldAction.html#perform%28%29" rel="nofollow">ClickAndHoldAction#perform()</a> </td></tr>
  <tr><td> POST </td><td> /session/:sessionId/buttonup </td><td> Releases the mouse button previously held (where the mouse is currently at). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/ButtonReleaseAction.html#perform%28%29" rel="nofollow">ButtonReleaseAction#perform()</a> </td></tr>
  <tr><td> POST </td><td> /session/:sessionId/doubleclick </td><td> Double-clicks at the current mouse coordinates (set by moveto). </td><td> <a href="http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/interactions/DoubleClickAction.html#perform%28%29" rel="nofollow">DoubleClickAction#perform()</a> </td> </tr>
- </body>
 </table>

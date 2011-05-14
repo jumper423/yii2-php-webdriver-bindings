@@ -1,6 +1,5 @@
 #List of JsonWireProtocol implemented methods (on green)
 
-{{{
 <table border="1" cellspacing="0">
 <tbody><tr><td> <strong>HTTP Method</strong> </td><td> <strong>Path</strong> </td><td> <strong>Summary</strong> </td><td> <strong>Java Equivalent</strong> </td></tr>
  <tr class="done"><td> POST </td><td> /session </td><td> Create a new session. </td><td> <i>N/A</i> </td></tr>
@@ -75,4 +74,3 @@
  </tbody>
  </body>
 </table>
-}}}

@@ -3,7 +3,8 @@
 Interface provided by CWebDriverTestCase is like classic Selenium PHPUnit_Extensions_SeleniumTestCase. 
 
 for example:
-{{{<?php
+{{{
+<?php
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  
 class WebTest extends PHPUnit_Extensions_SeleniumTestCase

@@ -27,6 +27,12 @@ class WebDriver extends WebDriverBase {
         parent::__construct("http://" . $host . ":" . $port . "/wd/hub");
     }
 
+    /**
+     * Connects to Selenium server.
+     * @param $browserName The name of the browser being used; should be one of {chrome|firefox|htmlunit|internet explorer|iphone}. 
+     * @param $version 	The browser version, or the empty string if unknown. 
+     * @param $caps  array with capabilities see: http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session
+    */
     public function connect($browserName="firefox", $version="", $caps=array()) {
         $request = $this->requestURL . "/session";
         $session = $this->curlInit($request);

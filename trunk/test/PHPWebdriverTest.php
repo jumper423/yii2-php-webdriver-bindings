@@ -21,6 +21,28 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $this->webdriver->close();
     }
 
+    public function testAlerts() {
+        $this->webdriver->get($this->test_url);
+        $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
+        $this->assertNotNull($element);
+        $element->click();
+	$this->assertTrue($this->webdriver->getAlertText()=="hello computer !!!");
+	$this->webdriver->acceptAlert();
+    }
+
+    public function testCookieSupport() {
+        $this->webdriver->get($this->test_url);
+	$this->webdriver->setCookie('aaa','testvalue'); 
+        $cookies = $this->webdriver->getAllCookies();
+	$this->assertTrue(count($cookies)==1);
+	$this->assertTrue($cookies[0]->name=='aaa');
+	$this->assertTrue($cookies[0]->value=='testvalue');
+	$this->webdriver->deleteCookie('aaa');
+        $cookies = $this->webdriver->getAllCookies();
+	$this->assertTrue(count($cookies)==0);
+    }
+
+
     public function testFindOptionElementInCombobox() {
         $this->webdriver->get($this->test_url);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "sel1");

@@ -124,7 +124,6 @@ class WebDriver extends WebDriverBase {
         $session = $this->curlInit($request);
         $args = array('speed' => $speed);
         $jsonData = json_encode($args);
-//		print_r($jsonData);
         $this->preparePOST($session, $jsonData);
         $response = curl_exec($session);
         return $this->extractValueFromJsonResponse($response);
@@ -140,11 +139,99 @@ class WebDriver extends WebDriverBase {
         $session = $this->curlInit($request);
         $args = array('name' => $windowName);
         $jsonData = json_encode($args);
-//		print_r($jsonData);
         $this->preparePOST($session, $jsonData);
         $response = curl_exec($session);
         return $this->extractValueFromJsonResponse($response);
     }
+
+    /**
+	Close the current window.
+    */
+    public function closeWindow() {
+        $request = $this->requestURL . "/window";
+        $session = $this->curlInit($request);
+        $this->prepareDELETE($session);
+        $response = curl_exec($session);
+        $this->curlClose();
+    }
+
+    /**
+     * Retrieve all cookies visible to the current page.
+     * @return array array with all cookies
+     */
+    public function getAllCookies() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/cookie");
+        return $this->extractValueFromJsonResponse($response);
+    }
+
+    /**
+	* Set a cookie. 	
+    */
+    public function setCookie($name, $value, $cookie_path='/', $domain='', $secure=false, $expiry='') {
+        $request = $this->requestURL . "/cookie";
+        $session = $this->curlInit($request);
+	$cookie = array('name'=>$name, 'value'=>$value, 'secure'=>$secure);
+	if (!empty($cookie_path)) $cookie['path']=$cookie_path;
+	if (!empty($domain)) $cookie['domain']=$domain;
+	if (!empty($expiry)) $cookie['expiry']=$exipry;
+        $args = array('cookie' => $cookie );
+        $jsonData = json_encode($args);
+        $this->preparePOST($session, $jsonData);
+        $response = curl_exec($session);
+        return $this->extractValueFromJsonResponse($response);
+    }
+
+
+    /**
+	Delete the cookie with the given name. This command should be a no-op if there is no such cookie visible to the current page.
+    */
+    public function deleteCookie($name) {
+        $request = $this->requestURL . "/cookie/".$name;
+        $session = $this->curlInit($request);
+        $this->prepareDELETE($session);
+        $response = curl_exec($session);
+        $this->curlClose();
+    }
+
+
+    /**
+     * Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.
+     * @return string The text of the currently displayed alert.
+     */
+    public function getAlertText() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/alert_text");
+        return $this->extractValueFromJsonResponse($response);
+    }
+
+    /**
+     * Sends keystrokes to a JavaScript prompt() dialog.
+    */
+    public function sendAlertText($text) {
+        $request = $this->requestURL . "/alert_text";
+        $session = $this->curlInit($request);
+        $args = array('keysToSend' => $text);
+        $jsonData = json_encode($args);
+        $this->preparePOST($session, $jsonData);
+        $response = curl_exec($session);
+        return $this->extractValueFromJsonResponse($response);
+    }
+
+
+    /**
+     * Accepts the currently displayed alert dialog. Usually, this is equivalent to clicking on the 'OK' button in the dialog.     
+    */
+    public function acceptAlert() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/accept_alert");
+    }
+
+    /**
+     *     Dismisses the currently displayed alert dialog. For confirm() and prompt() dialogs, 
+     *	this is equivalent to clicking the 'Cancel' button. For alert() dialogs, this is equivalent to clicking the 'OK' button.
+    */
+    public function dismissAlert() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/dismiss_alert");
+    }
+
 
     /**
       Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.

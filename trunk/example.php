@@ -19,11 +19,13 @@ limitations under the License.
 require_once "phpwebdriver/WebDriver.php";
 
 $webdriver = new WebDriver("localhost", "4444");
-$webdriver->connect("firefox");                            
+$webdriver->connect("internet explorer");                            
 $webdriver->get("http://google.com");
 $element = $webdriver->findElementBy(LocatorStrategy::name, "q");
-$element->sendKeys(array("php webdriver" ) );
-$element->submit();
+if ($element) {
+	$element->sendKeys(array("php webdriver" ) );
+	$element->submit();
+}
 
 $webdriver->close();
 

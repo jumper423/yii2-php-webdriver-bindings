@@ -221,7 +221,10 @@ class WebDriver extends WebDriverBase {
      * Accepts the currently displayed alert dialog. Usually, this is equivalent to clicking on the 'OK' button in the dialog.     
     */
     public function acceptAlert() {
-        $response = $this->execute_rest_request_GET($this->requestURL . "/accept_alert");
+        $request = $this->requestURL . "/accept_alert";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        $response = curl_exec($session);
     }
 
     /**
@@ -229,7 +232,10 @@ class WebDriver extends WebDriverBase {
      *	this is equivalent to clicking the 'Cancel' button. For alert() dialogs, this is equivalent to clicking the 'OK' button.
     */
     public function dismissAlert() {
-        $response = $this->execute_rest_request_GET($this->requestURL . "/dismiss_alert");
+        $request = $this->requestURL . "/dismiss_alert";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        $response = curl_exec($session);
     }
 
 

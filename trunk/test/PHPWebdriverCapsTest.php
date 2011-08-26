@@ -15,11 +15,11 @@ class PHPWebDriverCapsTest extends PHPUnit_Framework_TestCase {
     protected function setUp() {
         $this->webdriver = new WebDriver("localhost", 4444);
         $this->webdriver->connect("android", "", array(
-			"platform"=>"ANDROID",
-			"browserConnectionEnabled"=>true,
-			"rotatable"=>true,
-			"takesScreenshot"=>true,
-			));
+            "platform"=>"ANDROID",
+            "browserConnectionEnabled"=>true,
+            "rotatable"=>true,
+            "takesScreenshot"=>true,
+            ));
     }
 
     protected function tearDown() {

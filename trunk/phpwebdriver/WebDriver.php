@@ -36,20 +36,20 @@ class WebDriver extends WebDriverBase {
     public function connect($browserName="firefox", $version="", $caps=array()) {
         $request = $this->requestURL . "/session";
         $session = $this->curlInit($request);
-	$allCaps = 	
-		array_merge(
-  			array(
-  				'javascriptEnabled' => true,
-  				'nativeEvents'=>false,
-  		   	),
-			$caps,
-  			array(
-	  			'browserName'=>$browserName,
-	  			'version'=>$version,
-  		   	)
-		);
-	$params = array( 'desiredCapabilities' =>	$allCaps );
-	$postargs = json_encode($params);
+    $allCaps = 	
+        array_merge(
+              array(
+                  'javascriptEnabled' => true,
+                  'nativeEvents'=>false,
+                 ),
+            $caps,
+              array(
+                  'browserName'=>$browserName,
+                  'version'=>$version,
+                 )
+        );
+    $params = array( 'desiredCapabilities' =>	$allCaps );
+    $postargs = json_encode($params);
         $this->preparePOST($session, $postargs);
         curl_setopt($session, CURLOPT_HEADER, true);
         $response = curl_exec($session);
@@ -57,7 +57,7 @@ class WebDriver extends WebDriverBase {
         $this->requestURL = $header['url'];
     }
 
-    /**
+     /**
      * Delete the session.
      */
     public function close() {
@@ -66,6 +66,51 @@ class WebDriver extends WebDriverBase {
         $this->prepareDELETE($session);
         $response = curl_exec($session);
         $this->curlClose();
+    }
+    
+     /**
+     * Refresh the current page.
+     */
+    public function refresh() {
+
+        $request = $this->requestURL . "/refresh";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        curl_exec($session);
+    }
+    
+     /**
+     * Navigate forwards in the browser history, if possible.
+     */
+    public function forward() {
+
+        $request = $this->requestURL . "/forward";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        curl_exec($session);
+    }
+
+     /**
+     * Navigate backwards in the browser history, if possible.
+     */
+    public function back() {
+
+        $request = $this->requestURL . "/back";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        curl_exec($session);
+    }
+    
+     /**
+     * Change focus to another frame on the page. If the frame ID is null, the server should switch to the page's default content.
+     */
+    public function focusFrame($frameId) {
+
+        $request = $this->requestURL . "/frame";
+        $session = $this->curlInit($request);
+        $args = array('id' => $frameId);
+        $this->preparePOST($session, json_encode($args));
+        curl_exec($session);
     }
 
     /**
@@ -131,8 +176,8 @@ class WebDriver extends WebDriverBase {
 
 
     /**
-	Change focus to another window. The window to change focus to may be specified 
-	by its server assigned window handle, or by the value of its name attribute.
+    Change focus to another window. The window to change focus to may be specified 
+    by its server assigned window handle, or by the value of its name attribute.
     */
     public function selectWindow($windowName) {
         $request = $this->requestURL . "/window";
@@ -145,7 +190,7 @@ class WebDriver extends WebDriverBase {
     }
 
     /**
-	Close the current window.
+    Close the current window.
     */
     public function closeWindow() {
         $request = $this->requestURL . "/window";
@@ -165,15 +210,15 @@ class WebDriver extends WebDriverBase {
     }
 
     /**
-	* Set a cookie. 	
+    * Set a cookie. 	
     */
     public function setCookie($name, $value, $cookie_path='/', $domain='', $secure=false, $expiry='') {
         $request = $this->requestURL . "/cookie";
         $session = $this->curlInit($request);
-	$cookie = array('name'=>$name, 'value'=>$value, 'secure'=>$secure);
-	if (!empty($cookie_path)) $cookie['path']=$cookie_path;
-	if (!empty($domain)) $cookie['domain']=$domain;
-	if (!empty($expiry)) $cookie['expiry']=$exipry;
+    $cookie = array('name'=>$name, 'value'=>$value, 'secure'=>$secure);
+    if (!empty($cookie_path)) $cookie['path']=$cookie_path;
+    if (!empty($domain)) $cookie['domain']=$domain;
+    if (!empty($expiry)) $cookie['expiry']=$exipry;
         $args = array('cookie' => $cookie );
         $jsonData = json_encode($args);
         $this->preparePOST($session, $jsonData);
@@ -183,7 +228,7 @@ class WebDriver extends WebDriverBase {
 
 
     /**
-	Delete the cookie with the given name. This command should be a no-op if there is no such cookie visible to the current page.
+    Delete the cookie with the given name. This command should be a no-op if there is no such cookie visible to the current page.
     */
     public function deleteCookie($name) {
         $request = $this->requestURL . "/cookie/".$name;
@@ -215,7 +260,27 @@ class WebDriver extends WebDriverBase {
         $response = curl_exec($session);
         return $this->extractValueFromJsonResponse($response);
     }
+    
+     /**
+     * Get the current browser orientation. The server should return a valid orientation value as defined in ScreenOrientation: LANDSCAPE|PORTRAIT.
+     * @return string The current browser orientation corresponding to a value defined in ScreenOrientation: LANDSCAPE|PORTRAIT.
+     */
+    public function getOrientation() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/orientation");
+        return $this->extractValueFromJsonResponse($response);
+    }
 
+    /**
+     * Set the browser orientation. The orientation should be specified as defined in ScreenOrientation: LANDSCAPE|PORTRAIT.
+    */
+    public function setOrientation($orientation) {
+        $request = $this->requestURL . "/orientation";
+        $session = $this->curlInit($request);
+        $args = array('orientation' => $orientation);
+        $jsonData = json_encode($args);
+        $this->preparePOST($session, $jsonData);
+        curl_exec($session);
+    }
 
     /**
      * Accepts the currently displayed alert dialog. Usually, this is equivalent to clicking on the 'OK' button in the dialog.     
@@ -237,7 +302,6 @@ class WebDriver extends WebDriverBase {
         $this->preparePOST($session, null);
         $response = curl_exec($session);
     }
-
 
     /**
       Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame.

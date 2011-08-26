@@ -14,7 +14,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
         $this->webdriver = new WebDriver("localhost", 4444);
-        $this->webdriver->connect("firefox");
+        $this->webdriver->connect("chrome");
     }
 
     protected function tearDown() {
@@ -26,20 +26,21 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
         $this->assertNotNull($element);
         $element->click();
-	$this->assertTrue($this->webdriver->getAlertText()=="hello computer !!!");
-	$this->webdriver->acceptAlert();
+    $this->assertTrue($this->webdriver->getAlertText()=="hello computer !!!");
+    $this->webdriver->acceptAlert();
+    sleep(4);
     }
 
     public function testCookieSupport() {
         $this->webdriver->get($this->test_url);
-	$this->webdriver->setCookie('aaa','testvalue'); 
+    $this->webdriver->setCookie('aaa','testvalue'); 
         $cookies = $this->webdriver->getAllCookies();
-	$this->assertTrue(count($cookies)==1);
-	$this->assertTrue($cookies[0]->name=='aaa');
-	$this->assertTrue($cookies[0]->value=='testvalue');
-	$this->webdriver->deleteCookie('aaa');
+    $this->assertTrue(count($cookies)==1);
+    $this->assertTrue($cookies[0]->name=='aaa');
+    $this->assertTrue($cookies[0]->value=='testvalue');
+    $this->webdriver->deleteCookie('aaa');
         $cookies = $this->webdriver->getAllCookies();
-	$this->assertTrue(count($cookies)==0);
+    $this->assertTrue(count($cookies)==0);
     }
 
 

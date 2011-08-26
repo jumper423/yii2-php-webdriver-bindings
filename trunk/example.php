@@ -23,8 +23,8 @@ $webdriver->connect("internet explorer");
 $webdriver->get("http://google.com");
 $element = $webdriver->findElementBy(LocatorStrategy::name, "q");
 if ($element) {
-	$element->sendKeys(array("php webdriver" ) );
-	$element->submit();
+    $element->sendKeys(array("php webdriver" ) );
+    $element->submit();
 }
 
 $webdriver->close();

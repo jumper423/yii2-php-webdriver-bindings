@@ -43,6 +43,22 @@ class CWebDriverTestCase extends PHPUnit_Framework_TestCase {
     protected function tearDown() {
         $this->webdriver->close();
     }
+    
+    public function refresh(){
+        $this->webdriver->refresh();
+    }
+
+    public function back(){
+        $this->webdriver->back();
+    }
+
+    public function forward(){
+        $this->webdriver->forward();
+    }
+    
+    public function focusFrame($frameId){
+        $this->webdriver->focusFrame($frameId);
+    }
 
     public function setBrowserUrl( $url ) {
         $this->baseUrl = $url;
@@ -122,8 +138,13 @@ class CWebDriverTestCase extends PHPUnit_Framework_TestCase {
         $this->webdriver->close();
     }
 
-    public function select( $element_name, $option_text ) {
-        $element = $this->getElement( LocatorStrategy::id, $element_name );
+    /**
+        select item (option) in combobox
+        @param $select_id   id of SELECT element
+        @param @option_text option text to select
+    */
+    public function select( $select_id, $option_text ) {
+        $element = $this->getElement( LocatorStrategy::id, $select_id );
         $option = $element->findOptionElementByText( $option_text );
         $option->click();
         //$element->sendKeys(array($option_text));

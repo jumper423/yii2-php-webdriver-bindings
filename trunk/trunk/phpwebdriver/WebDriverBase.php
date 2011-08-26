@@ -24,33 +24,33 @@ require_once 'NoSuchElementException.php';
 class WebDriverBase {
 
     protected $requestURL;
-	protected $_curl;
+    protected $_curl;
 
     function __construct($_seleniumUrl) {
         $this->requestURL = $_seleniumUrl;
     }
-	
-	protected function &curlInit( $url ) {
-		if( $this->_curl === null ) {
-			$this->_curl = curl_init( $url );
-		} else {
-			curl_setopt( $this->_curl, CURLOPT_HTTPGET, true );
-			curl_setopt( $this->_curl, CURLOPT_URL, $url );
-		}
-		curl_setopt( $this->_curl, CURLOPT_HTTPHEADER, array("application/json;charset=UTF-8"));
-		curl_setopt( $this->_curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $this->_curl, CURLOPT_FOLLOWLOCATION, true );
-		curl_setopt( $this->_curl, CURLOPT_HEADER, false );
+    
+    protected function &curlInit( $url ) {
+        if( $this->_curl === null ) {
+            $this->_curl = curl_init( $url );
+        } else {
+            curl_setopt( $this->_curl, CURLOPT_HTTPGET, true );
+            curl_setopt( $this->_curl, CURLOPT_URL, $url );
+        }
+        curl_setopt( $this->_curl, CURLOPT_HTTPHEADER, array("application/json;charset=UTF-8"));
+        curl_setopt( $this->_curl, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $this->_curl, CURLOPT_FOLLOWLOCATION, true );
+        curl_setopt( $this->_curl, CURLOPT_HEADER, false );
 //		print_r($url."\n");
-		return $this->_curl;
-	}
+        return $this->_curl;
+    }
 
-	protected function curlClose() {
-		if( $this->_curl !== null ) {
-			curl_close( $this->_curl );
-			$this->_curl = null;
-		}
-	}
+    protected function curlClose() {
+        if( $this->_curl !== null ) {
+            curl_close( $this->_curl );
+            $this->_curl = null;
+        }
+    }
 
     protected function preparePOST($session, $postargs) {
         curl_setopt($session, CURLOPT_POST, true);
@@ -73,7 +73,7 @@ class WebDriverBase {
     }
 
     protected function prepareGET( $session ) {
-		
+        
         //curl_setopt($session, CURLOPT_GET, true);
     }
 
@@ -126,7 +126,7 @@ class WebDriverBase {
                 throw new NoSuchElementException($json_response);
             break;
             default:
-				print_r($json_response);
+                print_r($json_response);
                 throw new WebDriverException($status, 99, null);
             break;
         }
@@ -174,7 +174,28 @@ class WebDriverBase {
             return null;
         }*/
         return new WebElement($this, $element, null);
+    }    
+    
+    /**
+     * Search for an element on the page, starting from the document root. 
+     * @return WebElement found element
+     */
+    public function findActiveElement() {
+        $request = $this->requestURL . "/element/active";
+        $session = $this->curlInit($request);
+        $this->preparePOST($session, null);
+        $response = curl_exec($session);
+        $json_response = json_decode(trim($response));
+        if (!$json_response) {
+            return null;
+        }
+        $this->handleResponse($json_response);
+        $element = $json_response->{'value'};
+        
+        return new WebElement($this, $element, null);
     }
+    
+    
 
     /**
      * 	Search for multiple elements on the page, starting from the document root. 

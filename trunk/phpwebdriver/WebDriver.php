@@ -288,8 +288,9 @@ class WebDriver extends WebDriverBase {
     public function acceptAlert() {
         $request = $this->requestURL . "/accept_alert";
         $session = $this->curlInit($request);
-        $this->preparePOST($session, null);
+	$this->preparePOST($session, '');
         $response = curl_exec($session);
+        return $this->extractValueFromJsonResponse($response);
     }
 
     /**
@@ -299,8 +300,9 @@ class WebDriver extends WebDriverBase {
     public function dismissAlert() {
         $request = $this->requestURL . "/dismiss_alert";
         $session = $this->curlInit($request);
-        $this->preparePOST($session, null);
+	$this->preparePOST($session, '');
         $response = curl_exec($session);
+        return $this->extractValueFromJsonResponse($response);
     }
 
     /**

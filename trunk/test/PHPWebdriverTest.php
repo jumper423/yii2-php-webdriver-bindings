@@ -14,7 +14,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
         $this->webdriver = new WebDriver("localhost", 4444);
-        $this->webdriver->connect("chrome");
+        $this->webdriver->connect("firefox");
     }
 
     protected function tearDown() {
@@ -26,9 +26,9 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
         $this->assertNotNull($element);
         $element->click();
-    $this->assertTrue($this->webdriver->getAlertText()=="hello computer !!!");
-    $this->webdriver->acceptAlert();
-    sleep(4);
+        $this->assertTrue($this->webdriver->getAlertText()=="hello computer !!!");
+        $this->webdriver->acceptAlert();
+        sleep(4);
     }
 
     public function testCookieSupport() {

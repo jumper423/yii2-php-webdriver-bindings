@@ -238,6 +238,17 @@ class WebDriver extends WebDriverBase {
         $this->curlClose();
     }
 
+    /**
+    	Delete all cookies visible to the current page. 
+    */
+    public function deleteAllCookies($name) {
+        $request = $this->requestURL . "/cookie";
+        $session = $this->curlInit($request);
+        $this->prepareDELETE($session);
+        $response = curl_exec($session);
+        $this->curlClose();
+    }
+
 
     /**
      * Gets the text of the currently displayed JavaScript alert(), confirm(), or prompt() dialog.

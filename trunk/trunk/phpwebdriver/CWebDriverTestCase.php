@@ -147,14 +147,6 @@ class CWebDriverTestCase extends PHPUnit_Framework_TestCase {
         $element = $this->getElement( LocatorStrategy::id, $select_id );
         $option = $element->findOptionElementByText( $option_text );
         $option->click();
-        //$element->sendKeys(array($option_text));
-        /* $options = $element->findElementsBy(LocatorStrategy::tagName, "option");
-          foreach($options as $option) {
-          if ($option->getText()==$option_text) {
-          $option->setSelected();
-          break;
-          }
-          } */
     }
 
     public function getElementByIdOrName( $element_name ) {

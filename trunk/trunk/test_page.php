@@ -5,6 +5,21 @@
 <body>
 
 
+<?php
+
+    if(isset($_FILES['file1'])){
+        
+        echo 'UPLOADED FILE: ';
+        $file = dirname(__FILE__).'\\'.$_FILES['file1']['name'];
+        
+        if(move_uploaded_file($_FILES['file1']['tmp_name'], $file )){
+            echo $_FILES['file1']['name'];
+            @unlink( $file );
+        }
+        else echo 'ERROR';
+    }
+?>
+
 <?php 
 if (isset($_POST["product_name"])) {
    $prod = $_POST["product_name"];
@@ -22,6 +37,8 @@ product name: <input type="text" name="product_name" id="prod_name" size="40" va
   <option id="3" value="3">option 3</option>
   <option id="4" value="4">option 4</option>
 </select>
+<br/>
+<input type="file" id="file1" name="file1"/>
 <br/>
 <input type="checkbox" name="chbox1"/>checkbox<br/>
 <br/>

@@ -35,7 +35,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 	
     public function testBackAndForward() {
 
-        $this->webdriver->get('http://www.3e.pl');
+        $this->webdriver->get(TEST_URL);
         sleep(1);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");

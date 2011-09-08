@@ -18,7 +18,7 @@ Here is example file upload test using php-webdriver-bindings.
         else{
 		echo 'FILE_UPLOADED_ERROR';
 	}
-    }
+}
 ?>
 
 <form name="uploadFileForm" method="post" enctype="multipart/form-data">
@@ -34,7 +34,7 @@ Here is example file upload test using php-webdriver-bindings.
 
             $directory = 'your_test_file_directory';
 
-            $this->webdriver->get('http://web_url/fileUploadPage.php');
+            $this->webdriver->get('url/fileUploadPage.php');
 
             $element = $this->webdriver->findElementBy(LocatorStrategy::id, "upload");
             $this->assertNotNull($element);

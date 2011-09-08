@@ -12,8 +12,8 @@ Here is example file upload test using php-webdriver-bindings.
         $filePath = '/your_new_file_directory/'.$_FILES['upload']['name'];
         
         if(move_uploaded_file($_FILES['upload']['tmp_name'], $filePath )){
-            echo 'FILE_UPLOADED_SUCCESS';
-        }
+echo 'FILE_UPLOADED_SUCCESS';
+}
         else
 	{
 		echo 'FILE_UPLOADED_ERROR';

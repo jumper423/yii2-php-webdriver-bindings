@@ -4,7 +4,7 @@ Here is example file upload test using php-webdriver-bindings.
 # Page with form and input file field - fileUploadPage.php.
 
 ...
-
+{{{
 <?php
 
     if(isset($_FILES[['upload']])){
@@ -21,7 +21,7 @@ Here is example file upload test using php-webdriver-bindings.
  }
 
 ?>
-
+}}}
 <form name="uploadFileForm" method="post" enctype="multipart/form-data">
 	<input type="file" id="upload" name="upload" />
 </form>

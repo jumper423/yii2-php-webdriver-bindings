@@ -1,6 +1,8 @@
-#labels Phase-Implementation,Phase-Support
-# Example page with form and input file field.
-# fileUploadPage.php
+#labels Featured
+Here is example file upload test using php-webdriver-bindings.
+
+
+# Page with form and input file field - fileUploadPage.php.
 
 ...
 <?php
@@ -26,8 +28,6 @@
 
 
 ------------------------------------------------------------------------
-
-
 # Example test 
 
  public function testFileUpload() {
@@ -49,8 +49,6 @@
  
 
 ------------------------------------------------------------------------
- 
-
  # Implementation of isTextPresent method
 
  private function isTextPresent($text) {	

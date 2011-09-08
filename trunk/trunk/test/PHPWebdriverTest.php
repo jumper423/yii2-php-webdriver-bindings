@@ -1,5 +1,6 @@
 <?php
 
+if(is_file('../definedVars.php')) require_once '../definedVars.php';
 require_once 'phpwebdriver/WebDriver.php';
 
 /**
@@ -34,7 +35,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 	
     public function testBackAndForward() {
 
-        $this->webdriver->get(TEST_URL);
+        $this->webdriver->get('http://www.3e.pl');
         sleep(1);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");

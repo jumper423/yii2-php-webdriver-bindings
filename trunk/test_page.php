@@ -28,7 +28,7 @@ if (isset($_POST["product_name"])) {
 } else {
 ?>
 
-<form name="form1" method="post">
+<form name="form1" method="post" enctype="multipart/form-data">
 
 product name: <input type="text" name="product_name" id="prod_name" size="40" value="<?php if (isset($prod)) echo $prod;?>"/>
 <select name="sel1">

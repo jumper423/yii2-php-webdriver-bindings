@@ -1,0 +1,11 @@
+= How to upload file using php-webdriver-bindings =
+
+Here is example how to upload file using php-webdriver-bindings.
+We just need get input element, send file directory using sendKeys method and finally submit element.
+
+{{{
+            $element = $this->webdriver->findElementBy(LocatorStrategy::id, "inputId");
+
+            $element->sendKeys(array('file directory'));
+            $element->submit();
+}}}

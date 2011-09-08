@@ -9,7 +9,7 @@ Here is example file upload test using php-webdriver-bindings.
 
     if(isset($_FILES['upload'])){
         
-        $filePath = '/your_new_file_directory/'.$_FILES&#91;'upload'&#93;['name'];
+        $filePath = '/your_new_file_directory/'.$_FILES['upload']['name'];
         
         if(move_uploaded_file($_FILES['upload']['tmp_name'], $filePath )){
                 echo 'FILE_UPLOADED_SUCCESS';
@@ -32,18 +32,18 @@ Here is example file upload test using php-webdriver-bindings.
 
  public function testFileUpload() {
 
-        $directory = 'your_test_file_directory';
+            $directory = 'your_test_file_directory';
 
-        $this->webdriver->get('http://web_url/fileUploadPage.php');
+            $this->webdriver->get('http://web_url/fileUploadPage.php');
 
-        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "upload");
-        $this->assertNotNull($element);
+            $element = $this->webdriver->findElementBy(LocatorStrategy::id, "upload");
+            $this->assertNotNull($element);
 
-        $element->sendKeys(array($directory));
-        $element->submit();
-        sleep(1);
+            $element->sendKeys(array($directory));
+            $element->submit();
+            sleep(1);
 
-        $fileNameText = $this->isPresentText('FILE_UPLOADED_SUCCESS');
+            $fileNameText = $this->isPresentText('FILE_UPLOADED_SUCCESS');
         
  }
  
@@ -69,4 +69,4 @@ Here is example file upload test using php-webdriver-bindings.
 		}
         } while(!$found && $i <= $max_waiting_time );
 	return $found;
- }
+  }

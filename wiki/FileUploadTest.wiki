@@ -1,4 +1,3 @@
-#labels Featured
 Here is example file upload test using php-webdriver-bindings.
 
 

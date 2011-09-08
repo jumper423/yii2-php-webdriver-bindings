@@ -5,6 +5,7 @@ Here is example file upload test using php-webdriver-bindings.
 # Page with form and input file field - fileUploadPage.php.
 
 ...
+
 <?php
 
     if(isset($_FILES['upload'])){
@@ -18,7 +19,8 @@ Here is example file upload test using php-webdriver-bindings.
         else{
 		echo 'FILE_UPLOADED_ERROR';
 	}
-}
+ }
+
 ?>
 
 <form name="uploadFileForm" method="post" enctype="multipart/form-data">

@@ -100,6 +100,15 @@ class WebDriver extends WebDriverBase {
         $this->preparePOST($session, null);
         curl_exec($session);
     }
+	
+	/**
+     * Get the element on the page that currently has focus.
+     * @return JSON object WebElement.
+     */
+    public function getActiveElement() {
+        $response = $this->execute_rest_request_GET($this->requestURL . "/element/active");
+        return $this->extractValueFromJsonResponse($response);
+    }
     
      /**
      * Change focus to another frame on the page. If the frame ID is null, the server should switch to the page's default content.
@@ -111,6 +120,7 @@ class WebDriver extends WebDriverBase {
         $args = array('id' => $frameId);
         $this->preparePOST($session, json_encode($args));
         curl_exec($session);
+		
     }
 
     /**

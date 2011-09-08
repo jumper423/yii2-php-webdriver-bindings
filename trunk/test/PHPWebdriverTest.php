@@ -10,8 +10,6 @@ require_once 'phpwebdriver/WebDriver.php';
  */
 class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
-    private $test_url = "http://localhost:8080/php-webdriver-bindings/test_page.php";
-
     protected function setUp() {
         $this->webdriver = new WebDriver("localhost", 4444);
         $this->webdriver->connect("firefox");
@@ -21,9 +19,22 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $this->webdriver->close();
     }
 
+	public function testFileUpload() {
+
+        $this->webdriver->get(TEST_URL);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "file1");
+        $this->assertNotNull($element);
+
+        $element->sendKeys(array(EG_FILE_DIRECTORY . EG_FILE_NAME));
+        $element->submit();
+        sleep(1);
+        $this->assertTrue($this->isTextPresent(EG_FILE_NAME));
+    }
+	
     public function testBackAndForward() {
 
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         sleep(1);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
@@ -50,7 +61,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     public function testCssProperty() {
 
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
         $this->assertNotNull($element);
@@ -67,7 +78,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     public function testElementIsDisplayedAndItsSize() {
 
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
         $this->assertNotNull($element);
@@ -83,7 +94,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     public function testElementLocations() {
 
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
         $this->assertNotNull($element);
@@ -101,7 +112,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
     public function testIsOtherId() {
 
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
 
         $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
         $this->assertNotNull($element);
@@ -111,7 +122,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 	
     public function testAlerts() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
         $this->assertNotNull($element);
         $element->click();
@@ -121,7 +132,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testCookieSupport() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
     $this->webdriver->setCookie('aaa','testvalue'); 
         $cookies = $this->webdriver->getAllCookies();
     $this->assertTrue(count($cookies)==1);
@@ -134,7 +145,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
 
     public function testFindOptionElementInCombobox() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "sel1");
         $this->assertNotNull($element);
         $option3 = $element->findOptionElementByText("option 3");
@@ -154,13 +165,13 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testExecute() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $result = $this->webdriver->executeScript("return sayHello('unitTest')", array());
         $this->assertEquals("hello unitTest !!!", $result);
     }
 
     public function testScreenShot() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $tmp_filename = "screenshot".uniqid().".png";
         //unlink($tmp_filename);
         $result = $this->webdriver->getScreenshotAndSaveToFile($tmp_filename);
@@ -173,12 +184,12 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
      * @expectedException WebDriverException
      */
     public function testHandleError() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "12323233233aa");
     }
 
     public function testFindElemenInElementAndSelections() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "sel1");
         $this->assertNotNull($element);
         $options = $element->findElementsBy(LocatorStrategy::tagName, "option");
@@ -192,7 +203,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testFindElementByXpath() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $option3 = $this->webdriver->findElementBy(LocatorStrategy::xpath, '//select[@name="sel1"]/option[normalize-space(text())="option 3"]');
         $this->assertNotNull($option3);
         $this->assertEquals($option3->getText(), "option 3");
@@ -203,7 +214,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
 
     public function testFindElementByAndSubmit() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
         $this->assertNotNull($element);
         $element->sendKeys(array("selenium 123"));
@@ -217,27 +228,27 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetPageAndUrl() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $this->assertEquals($this->webdriver->getTitle(), "Test page");
-        $this->assertEquals($this->webdriver->getCurrentUrl(), $this->test_url);
+        $this->assertEquals($this->webdriver->getCurrentUrl(), TEST_URL);
     }
 
     public function testGetText() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "div1");
         $this->assertNotNull($element);
         $this->assertEquals($element->getText(), "lorem ipsum");
     }
 
     public function testGetName() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $element = $this->webdriver->findElementBy(LocatorStrategy::name, "div1");
         $this->assertNotNull($element);
         $this->assertEquals($element->getName(), "div");
     }
 
     public function testGetPageSource() {
-        $this->webdriver->get($this->test_url);
+        $this->webdriver->get(TEST_URL);
         $src = $this->webdriver->getPageSource();
         $this->assertNotNull($src);
         $this->assertTrue(strpos($src, "<html>") == 0);
@@ -246,7 +257,6 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     }
 	
 	private function isTextPresent($text) {
-
 
         $waiting_time = 0.5;
         $max_waiting_time = 4;

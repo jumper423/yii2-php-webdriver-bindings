@@ -15,8 +15,7 @@ Here is example file upload test using php-webdriver-bindings.
                 echo 'FILE_UPLOADED_SUCCESS';
 
         }
-        else
-	{
+        else{
 		echo 'FILE_UPLOADED_ERROR';
 	}
     }

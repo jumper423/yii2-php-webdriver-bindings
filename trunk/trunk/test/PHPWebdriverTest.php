@@ -13,28 +13,12 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     private $test_url = "http://localhost:8080/php-webdriver-bindings/test_page.php";
 
     protected function setUp() {
-        $this->webdriver = new WebDriver("ci.office.3e.pl", 4444);
+        $this->webdriver = new WebDriver("localhost", 4444);
         $this->webdriver->connect("firefox");
     }
 
     protected function tearDown() {
         $this->webdriver->close();
-    }
-
-	public function testFileUpload() {
-
-        $fileName = 'text.txt';
-        $directory = 'C:\Documents and Settings\Administrator\Desktop\\' . $fileName;
-
-        $this->webdriver->get($this->test_url);
-
-        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "file1");
-        $this->assertNotNull($element);
-
-        $element->sendKeys(array($directory));
-        $element->submit();
-        sleep(1);
-        $this->assertTrue($this->isTextPresent($fileName));
     }
 
     public function testBackAndForward() {

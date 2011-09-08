@@ -8,11 +8,11 @@ Here is example file upload test using php-webdriver-bindings.
 
 <?php
 
-    if(isset($_FILES[[ 'upload' ]])){
+    if(isset($_FILES[['upload']])){
         
-        $filePath = '/your_new_file_directory/'.$_FILES[[ 'upload' ]][[ 'name' ]];
+        $filePath = '/your_new_file_directory/'.$_FILES[['upload']][['name']];
         
-        if(move_uploaded_file($_FILES[[ 'upload' ]][[ 'tmp_name' ]], $filePath )){
+        if(move_uploaded_file($_FILES[['upload']][['tmp_name']], $filePath )){
                 echo 'FILE_UPLOADED_SUCCESS';
 
         }

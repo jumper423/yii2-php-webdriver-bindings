@@ -13,7 +13,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
     private $test_url = "http://localhost:8080/php-webdriver-bindings/test_page.php";
 
     protected function setUp() {
-        $this->webdriver = new WebDriver("localhost", 4444);
+        $this->webdriver = new WebDriver("ci.office.3e.pl", 4444);
         $this->webdriver->connect("firefox");
     }
 
@@ -21,6 +21,111 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $this->webdriver->close();
     }
 
+	public function testFileUpload() {
+
+        $fileName = 'text.txt';
+        $directory = 'C:\Documents and Settings\Administrator\Desktop\\' . $fileName;
+
+        $this->webdriver->get($this->test_url);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "file1");
+        $this->assertNotNull($element);
+
+        $element->sendKeys(array($directory));
+        $element->submit();
+        sleep(1);
+        $this->assertTrue($this->isTextPresent($fileName));
+    }
+
+    public function testBackAndForward() {
+
+        $this->webdriver->get($this->test_url);
+        sleep(1);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
+        $this->assertNotNull($element);
+
+        $this->webdriver->get('http://www.3e.pl');
+        sleep(1);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "O Nas");
+        $this->assertNotNull($element);
+
+        $this->webdriver->back();
+        sleep(1);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
+        $this->assertNotNull($element);
+
+        $this->webdriver->forward();
+        sleep(1);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "O Nas");
+        $this->assertNotNull($element);
+    }
+
+    public function testCssProperty() {
+
+        $this->webdriver->get($this->test_url);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
+        $this->assertNotNull($element);
+        $element->sendKeys(array("selenium 123"));
+        $this->assertEquals($element->getValue(), "selenium 123");
+        $element->submit();
+
+        $elementResult = $this->webdriver->findElementBy(LocatorStrategy::id, "result1");
+        $this->assertNotNull($elementResult);
+
+        $cssProperty = $elementResult->getCssProperty('background-color');
+        $this->assertEquals($cssProperty, "#008000");
+    }
+
+    public function testElementIsDisplayedAndItsSize() {
+
+        $this->webdriver->get($this->test_url);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
+        $this->assertNotNull($element);
+
+        $this->assertTrue($element->isDisplayed());
+
+        $elementSize = $element->getSize();
+
+        $this->assertNotNull($elementSize);
+        $this->assertEquals(266, $elementSize->width);
+        $this->assertEquals(22, $elementSize->height);
+    }
+
+    public function testElementLocations() {
+
+        $this->webdriver->get($this->test_url);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
+        $this->assertNotNull($element);
+
+        $location = $element->getLocation();
+        $this->assertNotNull($location);
+        $this->assertEquals(98, $location->x);
+        $this->assertEquals(8, $location->y);
+
+        $locationInView = $element->getLocationInView();
+        $this->assertNotNull($locationInView);
+        $this->assertEquals(102, $locationInView->x);
+        $this->assertEquals(12, $locationInView->y);
+    }
+
+    public function testIsOtherId() {
+
+        $this->webdriver->get($this->test_url);
+
+        $element = $this->webdriver->findElementBy(LocatorStrategy::id, "prod_name");
+        $this->assertNotNull($element);
+
+        $result = $element->isOtherId('sel1');
+        $this->assertFalse($result);
+    }
+	
     public function testAlerts() {
         $this->webdriver->get($this->test_url);
         $element = $this->webdriver->findElementBy(LocatorStrategy::linkText, "say hello (javascript)");
@@ -154,6 +259,27 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(strpos($src, "<html>") == 0);
         $this->assertTrue(strpos($src, "<body>") > 0);
         $this->assertTrue(strpos($src, "div1") > 0);
+    }
+	
+	private function isTextPresent($text) {
+
+
+        $waiting_time = 0.5;
+        $max_waiting_time = 4;
+
+        $found = false;
+        $i = 0;
+        do {
+            $html = $this->webdriver->getPageSource();
+            if (is_string($html)) {
+                $found = !(strpos($html, $text) === false);
+            }
+            if (!$found) {
+                sleep($waiting_time);
+                $i += $waiting_time;
+            }
+        } while (!$found && $i <= $max_waiting_time);
+        return $found;
     }
 
 }

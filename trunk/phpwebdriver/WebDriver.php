@@ -251,7 +251,7 @@ class WebDriver extends WebDriverBase {
     /**
     	Delete all cookies visible to the current page. 
     */
-    public function deleteAllCookies($name) {
+    public function deleteAllCookies() {
         $request = $this->requestURL . "/cookie";
         $session = $this->curlInit($request);
         $this->prepareDELETE($session);

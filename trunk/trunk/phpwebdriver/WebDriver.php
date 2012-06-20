@@ -136,7 +136,7 @@ class WebDriver extends WebDriverBase {
     }
 
     /**
-     * Get the current page title.
+     * Get the current page url.
      * @return string The current URL.
      */
     public function getCurrentUrl() {

@@ -228,7 +228,7 @@ class WebDriver extends WebDriverBase {
     $cookie = array('name'=>$name, 'value'=>$value, 'secure'=>$secure);
     if (!empty($cookie_path)) $cookie['path']=$cookie_path;
     if (!empty($domain)) $cookie['domain']=$domain;
-    if (!empty($expiry)) $cookie['expiry']=$exipry;
+    if (!empty($expiry)) $cookie['expiry']=$expiry;
         $args = array('cookie' => $cookie );
         $jsonData = json_encode($args);
         $this->preparePOST($session, $jsonData);

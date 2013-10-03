@@ -52,9 +52,14 @@ class WebDriver extends WebDriverBase {
     $postargs = json_encode($params);
         $this->preparePOST($session, $postargs);
         curl_setopt($session, CURLOPT_HEADER, true);
-        $response = curl_exec($session);
+        $rawResponse = curl_exec($session);
         $header = curl_getinfo($session);
-        $this->requestURL = $header['url'];
+	/* new way to retrieve sessionId from response in selenium 2.35.0 */
+	list($headers, $content) = explode("\r\n\r\n", $rawResponse, 2);
+	$jsonResponse = json_decode($content);
+	$sessionId = $jsonResponse->{'sessionId'};
+        $this->requestURL = $header['url'].'/'.$sessionId;
+	print_r($this->requestURL);
     }
 
      /**

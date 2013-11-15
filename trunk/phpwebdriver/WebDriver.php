@@ -59,7 +59,7 @@ class WebDriver extends WebDriverBase {
 	$jsonResponse = json_decode($content);
 	$sessionId = $jsonResponse->{'sessionId'};
         $this->requestURL = $header['url'].'/'.$sessionId;
-	print_r($this->requestURL);
+	//print_r($this->requestURL);
     }
 
      /**

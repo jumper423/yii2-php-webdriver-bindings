@@ -1,7 +1,7 @@
 <?php
 
-if(is_file('../definedVars.php')) require_once '../definedVars.php';
-require_once '../phpwebdriver/WebDriver.php';
+if(is_file(dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'definedVars.php')) require_once dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'definedVars.php';
+require_once( dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'phpwebdriver' . DIRECTORY_SEPARATOR . 'WebDriver.php' );
 
 /**
  * 

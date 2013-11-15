@@ -1,7 +1,7 @@
 <?php
 
-if(is_file('../definedVars.php')) require_once '../definedVars.php';
-require_once '../phpwebdriver/WebDriver.php';
+if(is_file(dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'definedVars.php')) require_once dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'definedVars.php';
+require_once( dirname(dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'phpwebdriver' . DIRECTORY_SEPARATOR . 'WebDriver.php' );
 
 /**
  * 
@@ -75,7 +75,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $this->assertNotNull($elementResult);
 
         $cssProperty = $elementResult->getCssProperty('background-color');
-        $this->assertEquals($cssProperty, "#008000");
+        $this->assertEquals($cssProperty, "rgba(0, 128, 0, 1)");
     }
 
     public function testElementIsDisplayedAndItsSize() {
@@ -90,7 +90,7 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
         $elementSize = $element->getSize();
 
         $this->assertNotNull($elementSize);
-        $this->assertEquals(266, $elementSize->width);
+        $this->assertEquals(269, $elementSize->width);
         $this->assertEquals(22, $elementSize->height);
     }
 
@@ -108,8 +108,8 @@ class PHPWebDriverTest extends PHPUnit_Framework_TestCase {
 
         $locationInView = $element->getLocationInView();
         $this->assertNotNull($locationInView);
-        $this->assertEquals(102, $locationInView->x);
-        $this->assertEquals(12, $locationInView->y);
+        $this->assertEquals(98, $locationInView->x);
+        $this->assertEquals(8, $locationInView->y);
     }
 
     public function testIsOtherId() {
